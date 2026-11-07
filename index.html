@@ -477,15 +477,15 @@ document.addEventListener("submit",async e=>{
     const {error}=await(id?sb.from("news").update(row).eq("id",id):sb.from("news").insert(row));await afterSave(error,"Saved");return;}
 });
 function route(){
-  const page=location.hash.replace("#","")||"home";
-  document.querySelectorAll(".page").forEach(el=>el.classList.toggle("active",el.id===page));
+  let page=location.hash.replace("#","")||"home",target=null;
+  const el=document.getElementById(page);
+  if(el&&!el.classList.contains("page")){target=el;const parent=el.closest(".page");page=parent?parent.id:"home";}
+  else if(!el)page="home";
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===page));
   document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("active",a.dataset.page===page));
-  $("mainNav").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});
+  $("mainNav").classList.remove("open");
+  if(target)setTimeout(()=>target.scrollIntoView({behavior:"smooth"}),60);else window.scrollTo({top:0,behavior:"smooth"});
 }
-document.querySelectorAll("a[href^='#']").forEach(a=>a.addEventListener("click",()=>{
-  const target=a.getAttribute("href").slice(1),el=$(target);
-  if(el&&!el.classList.contains("page")&&target==="contact"){location.hash="news";setTimeout(()=>$("contact").scrollIntoView({behavior:"smooth"}),80);}
-}));
 window.addEventListener("hashchange",route);
 $("menuBtn").addEventListener("click",()=>$("mainNav").classList.toggle("open"));
 document.querySelectorAll("[data-fixture]").forEach(btn=>btn.addEventListener("click",()=>{
