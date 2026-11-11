@@ -6,7 +6,7 @@ Official website for Mafera FC, a youth football club. It presents the club's te
 
 
 
-![Mafera FC homepage](screenshots/home.png)
+![Mafera FC homepage](home.png)
 
 
 
